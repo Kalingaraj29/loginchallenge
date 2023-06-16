@@ -1,65 +1,29 @@
 import React, { useReducer, useState } from "react";
-import { ReactSVG } from "react-svg";
 import "./Signuppage.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link, useNavigate } from "react-router-dom";
+import Validation, { getcredentialsfromLS } from "../Validation";
 
 export default function Signuppage() {
   const navigate = useNavigate();
-
-  const [userInput, setUserInput] = useState({email: "",password: "",confirmpassword: "",
-  });
-  const [error, setError] = useState({Eemail: "",Epassword: "", Econfirmpassword: "",ReEnter: "",passwordLength: "",
-  });
-
+  const [userInput, setUserInput] = useState({email:"", password:"",confirmpassword:"",});
+  const [error, setError] = useState({Eemail:"", Epassword:"",Econfirmpassword:"",ReEnter:"",passwordLength:"",status: false,});
+  
   function handleChange(e) {
     setUserInput({ ...userInput, [e.target.name]: e.target.value });
   }
-  var hastrue = false;
 
   function handleSubmit(e) {
     e.preventDefault();
-    Object.keys(error).forEach((element) => {
-      error[element] = "";
-    });
-    hastrue = false;
-    
-    if (userInput.email === "") {
-      error.Eemail = "Please enter the email";
-      hastrue = true;
-    }
-    if (userInput.password === "") {
-      error.Epassword = "Please enter the password";
-      hastrue = true;
-    }
-    if (userInput.confirmpassword === "") {
-      error.Econfirmpassword = "Please enter the confirm password";
-      hastrue = true;
-    }
-    if (userInput.password !== userInput.confirmpassword) {
-      error.ReEnter = "Password does not match";
-      hastrue = true;
-    }
-    if (userInput.password.length <= 8) {
-      error.passwordLength =
-        "Password length should be greater than 8 characters";
-      hastrue = true;
-    }
-    setError({ ...error });
-    if (!hastrue) {
+    Object.keys(error).forEach(element=>error[element] = "");
+    setError({ ...Validation(userInput, error) });
+    if (!error.status) {
       var Credential = getcredentialsfromLS();
-      localStorage.setItem(
-        "Usercredentials",
-        JSON.stringify([...Credential, userInput])
-      );
+      localStorage.setItem("Usercredentials",JSON.stringify([...Credential, userInput]));
       navigate("/login");
     }
   }
-  function getcredentialsfromLS() {
-    var Credentials = JSON.parse(localStorage.getItem("Usercredentials"));
-    return Credentials == null ? [] : Credentials;
-  }
-
+  
   return (
     <>
       <div className="App">
