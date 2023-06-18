@@ -1,10 +1,10 @@
 const Validation=(userInput, error) =>{
   if (userInput.email === "") {
-    error.Eemail = "Please enter the email";
+    error.Eemail = "The email field is required";
     error.status=true
   }
   if (userInput.password === "") {
-    error.Epassword = "Please enter the password";
+    error.Epassword = "The password field is require";
     error.status=true
   }
   if (userInput.confirmpassword === "") {
@@ -31,11 +31,11 @@ const getcredentialsfromLS=()=> {
 
 const loginValidation=(loginUserInput,error)=> {
   if (loginUserInput.email === "") {
-    error.Eemail = "Please enter the email";
+    error.Eemail = "The email field is required";
     error.status=true
   }
   if (loginUserInput.password === "") {
-    error.Epassword = "Please enter the password";
+    error.Epassword = "The password field is required";
     error.status=true
   }
 return error

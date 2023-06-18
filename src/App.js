@@ -8,14 +8,8 @@ import Welcomepage from './Pages/WelcomePage/Welcomepage';
 function App() {
   const router = createBrowserRouter([
     {
-      path:"/",element:<Signuppage/>
-    },{
-      path:"/login",element:<Loginpage/>
+      path:"/",element:<Loginpage/>
     },
-    {
-      path:"/Welcome",element:<Welcomepage />
-    }
-    
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 }
